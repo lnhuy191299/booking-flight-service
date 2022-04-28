@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="768c7576-0e1d-4678-8c7a-b73d40eb9335" name="flight" url="jdbc:postgresql://ec2-44-199-143-43.compute-1.amazonaws.com/d9ne994ikia2d2" driverClass="org.postgresql.Driver" />
+    </data-sources>
+  </component>
+</project>

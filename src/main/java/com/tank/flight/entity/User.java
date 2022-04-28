@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,4 +21,6 @@ public class User {
   @Column private String userName;
   @Column private String passWord;
   @Column private Role role;
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  private List<Booking> booking;
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig">
+    <option name="sourceDiffType" value="DB" />
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="sourceDbValue" value="768c7576-0e1d-4678-8c7a-b73d40eb9335" />
+    <option name="sourceModelValue" value="Default" />
+    <option name="targetDbValue" value="768c7576-0e1d-4678-8c7a-b73d40eb9335" />
+    <option name="snapshotDbValue" value="768c7576-0e1d-4678-8c7a-b73d40eb9335" />
+    <option name="newEntityIdType" value="Long" />
+    <option name="newEntityIdStrategy" value="Identity" />
+  </component>
+</project>
