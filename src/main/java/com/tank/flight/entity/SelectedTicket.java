@@ -1,5 +1,6 @@
 package com.tank.flight.entity;
 
+import com.tank.flight.enums.TicketType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,5 @@ public class SelectedTicket {
   @Column private String familyName;
   @Column private LocalDate dateOfBirth;
   @Column private String gender;
+  @Column private TicketType ticketType;
 }

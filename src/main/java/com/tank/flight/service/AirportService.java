@@ -30,7 +30,7 @@ public class AirportService {
     List<Flight> flightList = flightRepository.findByOriginAirportId(originAirportId);
     for (Flight fl : flightList) {
       Airport airport = airportRepository.findById(fl.getDestinationAirportId());
-      CityDto destinationCity = new CityDto(airport.getId(), airport.getAirportName(), airport.getShortCode());
+      CityDto destinationCity = new CityDto(airport.getId(), airport.getCityName(), airport.getShortCode());
       if (!cityList.contains(destinationCity)) {
         cityList.add(destinationCity);
       }
