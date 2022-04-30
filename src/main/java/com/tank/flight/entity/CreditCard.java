@@ -15,7 +15,7 @@ public class CreditCard {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  @Column private String cardCode;
-  @Column private String cardName;
+  @Column(unique = true) private String cardNumber;
+  @Column private String cvv;
   @Column private double balance;
 }

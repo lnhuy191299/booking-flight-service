@@ -2,17 +2,16 @@ package com.tank.flight.controller;
 
 import com.tank.flight.entity.Flight;
 import com.tank.flight.entity.SelectedTicket;
+import com.tank.flight.enums.MessageStatus;
+import com.tank.flight.model.BookingDto;
 import com.tank.flight.model.CityDto;
+import com.tank.flight.model.ServiceMessage;
 import com.tank.flight.repository.SelectedTicketRepository;
-import com.tank.flight.service.AirportService;
-import com.tank.flight.service.FlightService;
-import com.tank.flight.service.SelectedTicketService;
+import com.tank.flight.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,6 +22,8 @@ public class CustomerController {
   @Autowired private AirportService airportService;
   @Autowired private FlightService flightService;
   @Autowired private SelectedTicketService selectedTicketService;
+  @Autowired private CreditCardService creditCardService;
+  @Autowired private BookingService bookingService;
 
   @GetMapping("/hello")
   public ResponseEntity<String> greeting() {
@@ -54,5 +55,12 @@ public class CustomerController {
   @GetMapping("/flights/selected-tickets")
   public ResponseEntity<List<SelectedTicket>> getSelectedTickets(@RequestParam(name = "flightId") long flightId) {
     return ResponseEntity.ok(selectedTicketService.getSelectedTicketsByFlightId(flightId));
+  }
+
+  @PostMapping("/payment")
+  public ResponseEntity<String> paymentAndSaveBooking(@RequestBody BookingDto bookingDto) {
+    ServiceMessage serviceMessage = bookingService.paymentBooking(bookingDto);
+    if (serviceMessage.getStatus() == MessageStatus.FAIL) return ResponseEntity.badRequest().body(serviceMessage.getMessage());
+    else return ResponseEntity.ok(serviceMessage.getMessage());
   }
 }

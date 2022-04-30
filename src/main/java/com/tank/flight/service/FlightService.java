@@ -1,6 +1,7 @@
 package com.tank.flight.service;
 
 import com.tank.flight.entity.Flight;
+import com.tank.flight.entity.SelectedTicket;
 import com.tank.flight.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,27 @@ public class FlightService {
 
   public Flight getFlightByFlightId(long flightId) {
     return flightRepository.findById(flightId);
+  }
+
+  public double calculateTotalPrice(List<SelectedTicket> selectedTickets,  double rootPrice) {
+    double totalPrice = 0;
+    for (SelectedTicket selectedTicket : selectedTickets) {
+      double ticketPrice = 0.0D;
+      switch (selectedTicket.getTicketType()) {
+        case ADULT:
+          ticketPrice = rootPrice * 1;
+          break;
+        case CHILD:
+          ticketPrice = rootPrice * 0.9;
+          break;
+        case INFANT:
+          ticketPrice = rootPrice * 0.1;
+          break;
+        default:
+          break;
+      }
+      totalPrice += ticketPrice;
+    }
+    return totalPrice;
   }
 }

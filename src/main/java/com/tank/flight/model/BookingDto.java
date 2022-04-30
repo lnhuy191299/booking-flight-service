@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BookingDto {
   private String cardNumber;
-  private String cardCode;
+  private String ccv;
   private Booking booking;
   private List<SelectedTicket> selectedTickets;
 }

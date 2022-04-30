@@ -3,11 +3,14 @@ package com.tank.flight.service;
 import com.tank.flight.entity.CreditCard;
 import com.tank.flight.entity.Flight;
 import com.tank.flight.entity.SelectedTicket;
+import com.tank.flight.enums.MessageStatus;
 import com.tank.flight.model.BookingDto;
+import com.tank.flight.model.ServiceMessage;
 import com.tank.flight.repository.BookingRepository;
 import com.tank.flight.repository.CreditCardRepository;
 import com.tank.flight.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,28 +23,27 @@ public class BookingService {
   @Autowired private BookingRepository bookingRepository;
   @Autowired private SelectedTicketService selectedTicketService;
   @Autowired private CreditCardRepository creditCardRepository;
+  @Autowired private CreditCardService creditCardService;
+  @Autowired private FlightService flightService;
 
-  public boolean paymentBooking(BookingDto bookingDetails) {
+  public ServiceMessage paymentBooking(BookingDto bookingDetails) {
+    if (!creditCardService.checkValidCard(bookingDetails.getCardNumber())) return new ServiceMessage(MessageStatus.FAIL, "Credit Card is invalid") ;
+    if (!creditCardService.checkExistedCard(bookingDetails.getCardNumber())) return new ServiceMessage(MessageStatus.FAIL, "This Credit Card isn't existed");
+
     Optional<Flight> bookingFlight = flightRepository.findById(bookingDetails.getSelectedTickets().get(0).getFlightId());
-    double bookingPrice = 0D;
-//    CreditCard creditCard = creditCardRepository.findByCardNumberAndCardCode(bookingDetails.getCardNumber(), bookingDetails.getCardCode());
-//    if (creditCard != null) {
-//      for (SelectedTicket selectedTicket : bookingDetails.getSelectedTickets()) {
-//        bookingPrice += selectedTicket.getTicketType() * bookingFlight.get().getRootPrice();
-//      }
-//    } else return false;
+    double totalPrice = flightService.calculateTotalPrice(bookingDetails.getSelectedTickets(), bookingFlight.get().getRootPrice());
     long bookingId;
     try {
       bookingId = bookingRepository.save(bookingDetails.getBooking()).getId();
     } catch (Exception e) {
-      return false;
+      return new ServiceMessage(MessageStatus.FAIL, "Can't save this booking");
     }
     List<SelectedTicket> customSelectedTicket = new ArrayList<>();
     for (SelectedTicket selectedTicket : bookingDetails.getSelectedTickets()) {
       selectedTicket.setBookingId(bookingId);
       customSelectedTicket.add(selectedTicket);
     }
-    if (!selectedTicketService.saveAll(customSelectedTicket)) return false;
-    return true;
+    if (!selectedTicketService.saveAll(customSelectedTicket)) return new ServiceMessage(MessageStatus.FAIL, "Can't save these selected tickets");
+    return new ServiceMessage(MessageStatus.SUCCESS, "Payment successful");
   }
 }
