@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface FlightRepository extends CrudRepository<Flight, Long> {
   List<Flight> findByOriginAirportId(long id);
+  Flight findById(long id);
   @Query(value = "select *\n" +
           "from flight f \n" +
           "where CAST(f.departure_time  AS DATE) = :departureTime \n" +

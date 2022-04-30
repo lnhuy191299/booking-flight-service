@@ -17,10 +17,7 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
   @Column private String userName;
   @Column private String passWord;
   @Column private Role role;
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-  private List<Booking> booking;
 }

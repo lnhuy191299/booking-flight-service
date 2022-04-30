@@ -18,4 +18,8 @@ public class FlightService {
     LocalDateTime dateTime = LocalDateTime.parse(departureTime, formatter);
     return flightRepository.searchFlightForCustomer(dateTime, originId, departureId);
   }
+
+  public Flight getFlightByFlightId(long flightId) {
+    return flightRepository.findById(flightId);
+  }
 }

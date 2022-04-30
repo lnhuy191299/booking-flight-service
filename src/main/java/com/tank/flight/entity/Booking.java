@@ -17,7 +17,7 @@ public class Booking {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   @Column private LocalDateTime bookingTime;
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+  @Column private String contactPhoneNumber;
+  @Column private String contactEmail;
+  @Column private long userId;
 }

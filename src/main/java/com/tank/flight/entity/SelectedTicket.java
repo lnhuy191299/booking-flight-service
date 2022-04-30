@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -19,4 +20,9 @@ public class SelectedTicket {
   @Column private String seatCode;
   @Column private Long flightId;
   @Column private Long bookingId;
+  @Column private String prefixOfName;
+  @Column private String middleAndFirstName;
+  @Column private String familyName;
+  @Column private LocalDate dateOfBirth;
+  @Column private String gender;
 }
