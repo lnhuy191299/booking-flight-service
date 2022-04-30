@@ -24,12 +24,12 @@ public class BookingService {
   public boolean paymentBooking(BookingDto bookingDetails) {
     Optional<Flight> bookingFlight = flightRepository.findById(bookingDetails.getSelectedTickets().get(0).getFlightId());
     double bookingPrice = 0D;
-    CreditCard creditCard = creditCardRepository.findByCardNumberAndCardCode(bookingDetails.getCardNumber(), bookingDetails.getCardCode());
-    if (creditCard != null) {
-      for (SelectedTicket selectedTicket : bookingDetails.getSelectedTickets()) {
+//    CreditCard creditCard = creditCardRepository.findByCardNumberAndCardCode(bookingDetails.getCardNumber(), bookingDetails.getCardCode());
+//    if (creditCard != null) {
+//      for (SelectedTicket selectedTicket : bookingDetails.getSelectedTickets()) {
 //        bookingPrice += selectedTicket.getTicketType() * bookingFlight.get().getRootPrice();
-      }
-    } else return false;
+//      }
+//    } else return false;
     long bookingId;
     try {
       bookingId = bookingRepository.save(bookingDetails.getBooking()).getId();
